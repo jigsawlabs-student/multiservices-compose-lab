@@ -10,5 +10,4 @@ connection = Postgres(DATABASE_URL)
 
 @app.route('/locations')
 def locations():
-    locations = connection.all('SELECT * FROM locations;')
-    return jsonify({'locations': locations})
+    return jsonify({'locations': ['hello']})
