@@ -4,10 +4,15 @@ from postgres import Postgres
 
 app = Flask(__name__)
 
+
+
 DATABASE_URL = os.environ.get('DATABASE_URL')
 connection = Postgres(DATABASE_URL)
+connection.run("CREATE TABLE locations (name text)")
+connection.run("INSERT INTO locations VALUES ('maggie simpson')")
 
 
 @app.route('/locations')
 def locations():
-    return jsonify({'locations': ['hello']})
+    locations = connection.all('SELECT * FROM locations;')
+    return jsonify({'locations': locations})
