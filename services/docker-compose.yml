@@ -15,10 +15,11 @@ services:
     ports:
       - 3000:5000
     environment:
-      - DATABASE_URL=postgres://jigsawlabs:secret@db:5432/jigsawlabs
+      - DATABASE_URL=postgres://jigsaw_again:secret@db:5432/jigsaw_again
       - FLASK_APP=./restaurants/__init__.py
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./api/restaurants:/usr/src/app/restaurants
   db:
@@ -26,10 +27,15 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: jigsawlabs
+      POSTGRES_USER: jigsaw_again
       POSTGRES_PASSWORD: secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
-      - "postgres_data:/var/lib/postgresql/data"
-      - ./db:/docker-entrypoint-initdb.d/
+      - "pg:/var/lib/postgresql/data"
+      - ./db_data:/docker-entrypoint-initdb.d/
 volumes:
-  postgres_data:
+  pg:

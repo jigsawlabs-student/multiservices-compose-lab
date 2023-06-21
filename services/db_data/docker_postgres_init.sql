@@ -10,4 +10,6 @@ CREATE TABLE IF NOT EXISTS locations (
 INSERT INTO locations (city, state, country) VALUES
 ('New York','New York','USA'),
 ('Reykjavík','N/A','Iceland'),
-('Camden','New Jersey','USA');
+('Camden','New Jersey','USA'),
+('Philadelphia','Pennsylvania','USA');
+;
